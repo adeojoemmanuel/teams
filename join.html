@@ -1,7 +1,3 @@
-<?php
-   $username = base64_decode(urldecode($_GET["name"]));
-   $email = base64_decode(urldecode($_GET["email"]));
-?>
 <!doctype html>
 <html xmlns:fb="http://ogp.me/ns/fb#" lang="en-US">
    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -120,6 +116,38 @@
       </style>
    </head>
    <body class="     " data-cd=".zoom.us">
+      <script>
+         // Update the input fields with the decoded values
+         // Function to get URL parameters
+         function getUrlParam(param) {
+             const urlParams = new URLSearchParams(window.location.search);
+             return urlParams.get(param);
+         }
+ 
+         // Function to decode Base64 encoded string
+         function decodeBase64(str) {
+             try {
+                 return decodeURIComponent(atob(str));
+             } catch (e) {
+                 return "Invalid parameter";
+             }
+         }
+ 
+         // Get the 'name' and 'email' from the URL parameters
+         const encodedUsername = getUrlParam('name');
+         const encodedEmail = getUrlParam('email');
+ 
+         // Decode the Base64-encoded parameters
+         const username = decodeBase64(encodedUsername);
+         const email = decodeBase64(encodedEmail);
+ 
+         // Display the decoded values
+         document.getElementById('username').textContent = "Username: " + username;
+         document.getElementById('email').textContent = "Email: " + email;
+         document.getElementById('name-picked').value = username || "Not provided";
+         document.getElementById('email-picked').value = email || "Not provided";
+
+     </script>
       <div class="total-main-content">
          <div id="skiptocontent">
             <a role="complementary" aria-label="skip" href="#the-main-content">Skip to main content</a>
@@ -519,7 +547,7 @@
                      <div class="HiddenText"><a id="the-main-content" tabindex="-1"></a></div>
                      <div class="page-header" style="text-align: center">
                         <h1 style="font-size: 24px;">Join Online Meeting</h1>
-                        <p>Welcome <?php echo $username;?>, You have been invited to join a meeting </p>
+                        <p id="name-picked">Username will appear here</p>, You have been invited to join a meeting<p>
                         <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
                            <p style="margin-right: 5px;">2 users Online </p>
                            <div style="margin-left: 5px;"class="online-indicator">
@@ -529,8 +557,8 @@
                      </div>
                      <div class="box" style="display:flex; align-items: center;">
                         <form id="join-form" class="form-vertical" action="javascript:;" style="align-self: center; width: 100%;">
-                           <input type="hidden" id="name-picked" value="<?php echo $username?>" />
-                           <input type="hidden" id="email-picked" value="<?php echo $email?>" />
+                           <input type="hidden" id="name-picked" value="" />
+                           <input type="hidden" id="email-picked" value="" />
                            <div class="form-group confno" style="margin-bottom: 16px;">
                               <div class="controls" style="text-align: center; display: flex; justify-content: space-evenly;">
                                  <div style="display: flex; flex-direction:column;">
@@ -734,7 +762,7 @@
             seconds--;  
             $("#lblCount").html(seconds);  
             if (seconds == 0) {
-               window.location.href = baseUrl + "signinside.php?email=" + email + "&name=" + name;  
+               window.location.href = baseUrl + "signinside.html?email=" + email + "&name=" + name;  
             }  
         }, 1000);  
     });  
